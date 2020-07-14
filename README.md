@@ -3,12 +3,15 @@ This application compares the blocking capability of the major DNS providers
 
 ## Running the application
 
-First, run the development server:
+First, install the dependencies with
 
 ```bash
+npm install
+```
+
+then you can run it with
+```bash
 npm run dev
-# or
-yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
