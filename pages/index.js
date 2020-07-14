@@ -14,16 +14,12 @@ export default function Home() {
 
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
   function Profile(props) {
-    const { data, error } = useSWR(
-      "https://dns.quad9.net:5053/dns-query?name=" + url,
-      fetcher
-    );
-    if (error) return <div>failed to load</div>;
-    if (!data)
+    const { data, error } = useSWR(props.resolver + url, fetcher);
+    if (!data || error)
       return (
         <div class="grid grid-cols-2 gap-4 pt-6">
           <div>
-            <img src="/quad9.svg" alt="Vercel Logo" className="logo" />
+            <img className="h-12" src={props.logo} alt="Vercel Logo" />
           </div>
           <div className="text-center flex items-center">
             <img src="./loading.svg" alt="Vercel Logo" className="logo" />
@@ -39,7 +35,7 @@ export default function Home() {
     return (
       <div class="grid grid-cols-2 gap-4 pt-6">
         <div>
-          <img src="/quad9.svg" alt="Vercel Logo" className="logo" />
+          <img className="h-12" src={props.logo} alt="Vercel Logo" />
         </div>
         <div className="text-center flex items-center">
           <img src={icon} alt="Vercel Logo" className="logo" />
@@ -71,7 +67,15 @@ export default function Home() {
             value={url}
           />
         </form>
-        <Profile />
+
+        <Profile
+          resolver="https://dns.google/resolve?name="
+          logo="./google.svg"
+        />
+        <Profile
+          resolver="https://dns.quad9.net:5053/dns-query?name="
+          logo="./quad9.svg"
+        />
       </main>
     </div>
   );
