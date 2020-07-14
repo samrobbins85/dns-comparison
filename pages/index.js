@@ -83,6 +83,33 @@ export default function Home() {
           logo="./quad9.svg"
         />
       </main>
+      <hr className="pb-2" />
+      <div className="flex justify-center text-2xl font-bold">Key</div>
+
+      <div class="flex justify-center bg-white">
+        <div class="flex-initial text-gray-700 text-center  px-4 m-2">
+          <img src="./loading.svg" alt="Vercel Logo" className="logo" />
+        </div>
+        <div class="flex-initial text-gray-700 text-center px-4  m-2">
+          Loading
+        </div>
+      </div>
+      <div class="flex justify-center ">
+        <div class="flex-initial text-gray-700 text-center  px-4 m-2">
+          <img src="./available.svg" alt="Vercel Logo" className="logo" />
+        </div>
+        <div class="flex-initial text-gray-700 text-center  px-4  m-2">
+          Can be resolved
+        </div>
+      </div>
+      <div class="flex justify-center ">
+        <div class="flex-initial text-gray-700 text-center  px-4 m-2">
+          <img src="./not_available.svg" alt="Vercel Logo" className="logo" />
+        </div>
+        <div class="flex-initial text-gray-700 text-center  px-4  m-2">
+          Can't be resolved
+        </div>
+      </div>
     </div>
   );
 }
