@@ -15,16 +15,33 @@ export default function Home() {
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
   function Profile(props) {
     const { data, error } = useSWR(props.resolver + url, fetcher);
+    if (url === "") {
+      return (
+        <>
+          <div class="grid grid-cols-2 gap-4 pt-6">
+            <div>
+              <img className="h-12" src={props.logo} alt="Vercel Logo" />
+            </div>
+            <div className="text-center flex items-center"></div>
+          </div>
+          <hr className="mt-4" />
+        </>
+      );
+    }
+
     if (!data || error)
       return (
-        <div class="grid grid-cols-2 gap-4 pt-6">
-          <div>
-            <img className="h-12" src={props.logo} alt="Vercel Logo" />
+        <>
+          <div class="grid grid-cols-2 gap-4 pt-6">
+            <div>
+              <img className="h-12" src={props.logo} alt="Vercel Logo" />
+            </div>
+            <div className="text-center flex items-center">
+              <img src="./loading.svg" alt="Vercel Logo" className="logo" />
+            </div>
           </div>
-          <div className="text-center flex items-center">
-            <img src="./loading.svg" alt="Vercel Logo" className="logo" />
-          </div>
-        </div>
+          <hr className="mt-4" />
+        </>
       );
     // render data
     var icon = "/not_available.svg";
@@ -33,14 +50,17 @@ export default function Home() {
     }
     console.log(data);
     return (
-      <div class="grid grid-cols-2 gap-4 pt-6">
-        <div>
-          <img className="h-12" src={props.logo} alt="Vercel Logo" />
+      <>
+        <div class="grid grid-cols-2 gap-4 pt-6">
+          <div>
+            <img className="h-12" src={props.logo} alt="Vercel Logo" />
+          </div>
+          <div className="text-center flex items-center">
+            <img src={icon} alt="Vercel Logo" className="logo" />
+          </div>
         </div>
-        <div className="text-center flex items-center">
-          <img src={icon} alt="Vercel Logo" className="logo" />
-        </div>
-      </div>
+        <hr className="mt-4" />
+      </>
     );
   }
 
