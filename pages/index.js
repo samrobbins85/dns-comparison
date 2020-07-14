@@ -48,7 +48,10 @@ export default function Home() {
     <div className="bg-white flex flex-col h-screen">
       <Head>
         <title>DNS Comparison</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link
+          rel="icon"
+          href="https://www.globalcyberalliance.org/wp-content/uploads/favicon.png"
+        />
       </Head>
 
       <main className="flex-grow mx-auto p-8">
