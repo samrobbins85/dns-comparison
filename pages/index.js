@@ -1,19 +1,53 @@
 import Head from "next/head";
 import useSWR from "swr";
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
-function Profile(props) {
-  const { data, error } = useSWR(
-    "https://dns.quad9.net:5053/dns-query?name=" + props.url,
-    fetcher
-  );
-  if (error) return <div>failed to load</div>;
-  if (!data) return <div>loading...</div>;
-  // render data
-  console.log(data);
-  return <div>Status code is {data.Status}</div>;
-}
+import React, { useState } from "react";
 
 export default function Home() {
+  const [url, setURL] = useState("");
+  function handleSubmit() {
+    return "Hello World";
+  }
+
+  function handleChange(event) {
+    setURL(event.target.value);
+  }
+
+  const fetcher = (...args) => fetch(...args).then((res) => res.json());
+  function Profile(props) {
+    const { data, error } = useSWR(
+      "https://dns.quad9.net:5053/dns-query?name=" + url,
+      fetcher
+    );
+    if (error) return <div>failed to load</div>;
+    if (!data)
+      return (
+        <div class="grid grid-cols-2 gap-4 pt-6">
+          <div>
+            <img src="/quad9.svg" alt="Vercel Logo" className="logo" />
+          </div>
+          <div className="text-center flex items-center">
+            <img src="./loading.svg" alt="Vercel Logo" className="logo" />
+          </div>
+        </div>
+      );
+    // render data
+    var icon = "/not_available.svg";
+    if (data.Status === 0) {
+      icon = "/available.svg";
+    }
+    console.log(data);
+    return (
+      <div class="grid grid-cols-2 gap-4 pt-6">
+        <div>
+          <img src="/quad9.svg" alt="Vercel Logo" className="logo" />
+        </div>
+        <div className="text-center flex items-center">
+          <img src={icon} alt="Vercel Logo" className="logo" />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-white flex flex-col h-screen">
       <Head>
@@ -22,19 +56,23 @@ export default function Home() {
       </Head>
 
       <main className="flex-grow mx-auto p-8">
-        <h1 className="title text-center text-5xl">
-          Welcome to the Quad9 Comparator
-        </h1>
+        <h1 className="title text-center text-5xl">DNS Comparison</h1>
 
-        <p className="description text-center text-xl text-gray-700">
-          This is just a test to see what kind of user interface I can generate
+        <p className="description text-center text-xl text-gray-700 mb-6">
+          Enter a URL in the textbox below to compare it on different DNS
+          providers
         </p>
-        <Profile url="google.com" />
-      </main>
 
-      <footer className="w-full text-center border-t border-grey p-4 absolute bottom-0">
-        <div>Created by GCA</div>
-      </footer>
+        <form className="text-center">
+          <input
+            className="form-input"
+            type="text"
+            onChange={handleChange}
+            value={url}
+          />
+        </form>
+        <Profile />
+      </main>
     </div>
   );
 }
