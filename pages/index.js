@@ -66,7 +66,6 @@ export default function Home() {
           <input
             className="form-input"
             type="text"
-            size="50"
             onChange={handleChange}
             value={url}
           />
