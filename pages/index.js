@@ -47,7 +47,7 @@ export default function Home() {
   return (
     <div className="bg-white flex flex-col h-screen">
       <Head>
-        <title>Quad9 Compare</title>
+        <title>DNS Comparison</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -63,11 +63,15 @@ export default function Home() {
           <input
             className="form-input"
             type="text"
+            size="50"
             onChange={handleChange}
             value={url}
           />
         </form>
-
+        <Profile
+          resolver="https://Cloudflare-dns.com/dns-query?ct=application/dns-json&type=AAAA&name="
+          logo="./cloudflare.svg"
+        />
         <Profile
           resolver="https://dns.google/resolve?name="
           logo="./google.svg"
