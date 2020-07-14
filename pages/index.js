@@ -18,7 +18,7 @@ export default function Home() {
     if (url === "") {
       return (
         <>
-          <div class="grid grid-cols-2 gap-4 pt-6">
+          <div className="grid grid-cols-2 gap-4 pt-6">
             <div>
               <img className="h-12" src={props.logo} alt="Vercel Logo" />
             </div>
@@ -75,7 +75,7 @@ export default function Home() {
       </Head>
 
       <main className="flex-grow mx-auto p-8">
-        <h1 className="title text-center text-5xl">DNS Comparison</h1>
+        <h1 className="title text-center text-5xl font-bold">DNS Comparison</h1>
 
         <p className="description text-center text-xl text-gray-700 mb-6">
           Enter a URL in the textbox below to compare it on different DNS
