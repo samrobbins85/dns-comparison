@@ -1,6 +1,7 @@
 import Head from "next/head";
 import useSWR from "swr";
 import React, { useState } from "react";
+import NavBar from "../components/navbar";
 const isValidDomain = require("is-valid-domain");
 export default function Home() {
   const [url, setURL] = useState("");
@@ -83,6 +84,7 @@ export default function Home() {
 
   return (
     <div className="bg-white flex flex-col h-screen">
+      <NavBar />
       <Head>
         <title>DNS Comparison</title>
         <link

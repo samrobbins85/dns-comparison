@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import useSWR from "swr";
 import Head from "next/head";
-
+import NavBar from "../components/navbar";
 function FetchDomain(props) {
   if (props.domain === "") {
     return "";
@@ -74,6 +74,7 @@ export default function Bulk() {
         />
       </Head>
       <div className="bg-white flex flex-col h-screen">
+        <NavBar />
         <main className="flex-grow mx-64 p-8">
           <h1 className="title text-center text-5xl font-bold">
             DNS Comparison
