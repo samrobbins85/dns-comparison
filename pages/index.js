@@ -16,7 +16,11 @@ export default function Home() {
     try {
       setDomain(new URL(url).hostname);
     } catch {
-      setDomain(url);
+      try {
+        setDomain(new URL("https://" + url).hostname);
+      } catch {
+        setDomain(url);
+      }
     }
 
     if (!isValidDomain(domain)) {
