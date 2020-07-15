@@ -5,7 +5,7 @@ const isValidDomain = require("is-valid-domain");
 export default function Home() {
   const [url, setURL] = useState("");
   const [domain, setDomain] = useState("");
-  const [textbox, setTextbox] = useState("");
+  const [textbox, setTextbox] = useState("gray");
 
   function handleChange(event) {
     setURL(event.target.value);
@@ -97,7 +97,11 @@ export default function Home() {
 
         <form className="text-center">
           <input
-            className={`bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-${textbox}-500`}
+            className={
+              `bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-` +
+              textbox +
+              "-500"
+            }
             type="text"
             onChange={handleChange}
             value={url}
