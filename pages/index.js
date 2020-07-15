@@ -1,10 +1,11 @@
 import Head from "next/head";
 import useSWR from "swr";
 import React, { useState } from "react";
-
+const isValidDomain = require("is-valid-domain");
 export default function Home() {
   const [url, setURL] = useState("");
   const [domain, setDomain] = useState("");
+  const [textbox, setTextbox] = useState("");
   function handleSubmit() {
     return "Hello World";
   }
@@ -21,8 +22,12 @@ export default function Home() {
       setDomain(url);
     }
 
-    const { data, error } = useSWR(props.resolver + domain, fetcher);
-    if (url === "") {
+    if (!isValidDomain(domain)) {
+      if (domain === "") {
+        setTextbox("gray");
+      } else {
+        setTextbox("red");
+      }
       return (
         <>
           <div className="grid grid-cols-2 gap-4 pt-6">
@@ -34,7 +39,11 @@ export default function Home() {
           <hr className="mt-4" />
         </>
       );
+    } else {
+      setTextbox("green");
     }
+
+    const { data, error } = useSWR(props.resolver + domain, fetcher);
 
     if (!data || error)
       return (
@@ -91,7 +100,7 @@ export default function Home() {
 
         <form className="text-center">
           <input
-            className="form-input"
+            className={`bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-${textbox}-500`}
             type="text"
             onChange={handleChange}
             value={url}
