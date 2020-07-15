@@ -4,6 +4,7 @@ import React, { useState } from "react";
 
 export default function Home() {
   const [url, setURL] = useState("");
+  const [domain, setDomain] = useState("");
   function handleSubmit() {
     return "Hello World";
   }
@@ -14,7 +15,13 @@ export default function Home() {
 
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
   function Profile(props) {
-    const { data, error } = useSWR(props.resolver + url, fetcher);
+    try {
+      setDomain(new URL(url).hostname);
+    } catch {
+      setDomain(url);
+    }
+
+    const { data, error } = useSWR(props.resolver + domain, fetcher);
     if (url === "") {
       return (
         <>
