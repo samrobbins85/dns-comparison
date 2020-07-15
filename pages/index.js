@@ -6,9 +6,6 @@ export default function Home() {
   const [url, setURL] = useState("");
   const [domain, setDomain] = useState("");
   const [textbox, setTextbox] = useState("");
-  function handleSubmit() {
-    return "Hello World";
-  }
 
   function handleChange(event) {
     setURL(event.target.value);
@@ -31,7 +28,7 @@ export default function Home() {
       return (
         <>
           <div className="grid grid-cols-2 gap-4 pt-6">
-            <div>
+            <div className="flex justify-center">
               <img className="h-12" src={props.logo} alt="Vercel Logo" />
             </div>
             <div className="text-center flex items-center"></div>
@@ -49,10 +46,10 @@ export default function Home() {
       return (
         <>
           <div class="grid grid-cols-2 gap-4 pt-6">
-            <div>
+            <div className="flex justify-center">
               <img className="h-12" src={props.logo} alt="Vercel Logo" />
             </div>
-            <div className="text-center flex items-center">
+            <div className="text-center flex justify-center">
               <img src="./loading.svg" alt="Vercel Logo" className="logo" />
             </div>
           </div>
@@ -68,10 +65,10 @@ export default function Home() {
     return (
       <>
         <div class="grid grid-cols-2 gap-4 pt-6">
-          <div>
+          <div className="flex justify-center">
             <img className="h-12" src={props.logo} alt="Vercel Logo" />
           </div>
-          <div className="text-center flex items-center">
+          <div className="text-center flex justify-center">
             <img src={icon} alt="Vercel Logo" className="logo" />
           </div>
         </div>
@@ -121,29 +118,26 @@ export default function Home() {
       </main>
       <hr className="pb-2" />
       <div className="flex justify-center text-2xl font-bold">Key</div>
-
-      <div className="flex justify-center bg-white">
-        <div className="flex-initial text-gray-700 text-center  px-4 m-2">
+      <div className="grid grid-cols-2">
+        <div className="text-gray-700 text-center px-4 m-2  flex justify-end">
           <img src="./loading.svg" alt="Vercel Logo" className="logo" />
         </div>
-        <div className="flex-initial text-gray-700 text-center px-4  m-2">
+        <div className="text-gray-700 text-center px-4  m-2 flex justify-start items-center">
           Loading
         </div>
-      </div>
-      <div className="flex justify-center ">
-        <div className="flex-initial text-gray-700 text-center  px-4 m-2">
+
+        <div className="text-gray-700 text-center px-4 m-2 flex justify-end">
           <img src="./available.svg" alt="Vercel Logo" className="logo" />
         </div>
-        <div className="flex-initial text-gray-700 text-center  px-4  m-2">
-          Can be resolved
+        <div className="text-gray-700 text-center px-4  m-2 flex justify-start items-center">
+          Resolved
         </div>
-      </div>
-      <div className="flex justify-center ">
-        <div className="flex-initial text-gray-700 text-center  px-4 m-2">
+
+        <div className="text-gray-700 text-center px-4 m-2 flex justify-end">
           <img src="./not_available.svg" alt="Vercel Logo" className="logo" />
         </div>
-        <div className="flex-initial text-gray-700 text-center  px-4  m-2">
-          Can't be resolved
+        <div className="text-gray-700 text-center px-4  m-2 flex justify-start items-center">
+          Can't resolve
         </div>
       </div>
     </div>
