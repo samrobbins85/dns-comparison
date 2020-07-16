@@ -75,7 +75,7 @@ export default function Bulk() {
       </Head>
       <div className="bg-white flex flex-col h-screen">
         <NavBar />
-        <main className="flex-grow mx-64 p-8">
+        <main className="flex-grow p-8">
           <h1 className="title text-center text-5xl font-bold">
             DNS Comparison
           </h1>
@@ -86,14 +86,16 @@ export default function Bulk() {
           <form className="text-center flex justify-center">
             <input type="file" id="input" onChange={FileChange} />
           </form>
-          <div className="grid grid-cols-4 gap-4  pt-4">
-            <div>Domain</div>
-            <div>Cloudflare</div>
-            <div>Google</div>
-            <div>Quad9</div>
-            {file.map((domain) => (
-              <DomainResult domain={domain} key={domain} />
-            ))}
+          <div className="flex justify-center">
+            <div className="grid grid-cols-4 gap-4 pt-4 container">
+              <div>Domain</div>
+              <div>Cloudflare</div>
+              <div>Google</div>
+              <div>Quad9</div>
+              {file.map((domain) => (
+                <DomainResult domain={domain} key={domain} />
+              ))}
+            </div>
           </div>
         </main>
       </div>
