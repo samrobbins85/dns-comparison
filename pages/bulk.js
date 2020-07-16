@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import useSWR from "swr";
 import Head from "next/head";
 import NavBar from "../components/navbar";
+import { useTable } from "react-table";
 function FetchDomain(props) {
   if (props.domain === "") {
     return "";
@@ -46,6 +47,72 @@ function DomainResult(props) {
 }
 
 export default function Bulk() {
+  const data = React.useMemo(
+    () => [
+      {
+        domain: "Hello",
+
+        cloudflare: "World",
+      },
+
+      {
+        domain: "react-table",
+
+        cloudflare: "rocks",
+      },
+
+      {
+        domain: "whatever",
+
+        cloudflare: "you want",
+      },
+    ],
+
+    []
+  );
+
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: "Domain",
+
+        accessor: "domain", // accessor is the "key" in the data
+      },
+
+      {
+        Header: "Cloudflare",
+
+        accessor: "cloudflare",
+      },
+
+      {
+        Header: "Google",
+
+        accessor: "google",
+      },
+
+      {
+        Header: "Quad9",
+
+        accessor: "Quad9",
+      },
+    ],
+
+    []
+  );
+
+  const {
+    getTableProps,
+
+    getTableBodyProps,
+
+    headerGroups,
+
+    rows,
+
+    prepareRow,
+  } = useTable({ columns, data });
+
   const [file, setFile] = useState([""]);
 
   function FileChange(event) {
@@ -97,6 +164,57 @@ export default function Bulk() {
               ))}
             </div>
           </div>
+          <table {...getTableProps()} style={{ border: "solid 1px blue" }}>
+            <thead>
+              {headerGroups.map((headerGroup) => (
+                <tr {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map((column) => (
+                    <th
+                      {...column.getHeaderProps()}
+                      style={{
+                        borderBottom: "solid 3px red",
+
+                        background: "aliceblue",
+
+                        color: "black",
+
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {column.render("Header")}
+                    </th>
+                  ))}
+                </tr>
+              ))}
+            </thead>
+
+            <tbody {...getTableBodyProps()}>
+              {rows.map((row) => {
+                prepareRow(row);
+
+                return (
+                  <tr {...row.getRowProps()}>
+                    {row.cells.map((cell) => {
+                      return (
+                        <td
+                          {...cell.getCellProps()}
+                          style={{
+                            padding: "10px",
+
+                            border: "solid 1px gray",
+
+                            background: "papayawhip",
+                          }}
+                        >
+                          {cell.render("Cell")}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </main>
       </div>
     </>
