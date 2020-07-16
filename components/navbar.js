@@ -5,10 +5,14 @@ export default function NavBar() {
     <nav className="border-b border-gray-200 h-12 p-3">
       <ul className="flex float-left">
         <li className="mr-6">
-          <Link href="/">Home </Link>
+          <Link href="/">
+            <a>Home</a>
+          </Link>
         </li>
         <li className="mr-6">
-          <Link href="/bulk">Bulk</Link>
+          <Link href="/bulk">
+            <a>Bulk</a>
+          </Link>
         </li>
       </ul>
       <ul className="flex float-right">
