@@ -7,6 +7,7 @@ export default function Home() {
   const [url, setURL] = useState("");
   const [domain, setDomain] = useState("");
   const [textbox, setTextbox] = useState(false);
+  const [showstatus, setShowstatus] = useState(false);
 
   function handleChange(event) {
     setURL(event.target.value);
@@ -24,49 +25,33 @@ export default function Home() {
       }
     }
 
+    var icon = "./loading.svg";
     if (!isValidDomain(domain)) {
+      setShowstatus(false);
       if (domain === "") {
         setTextbox(false);
       } else {
         setTextbox(true);
       }
-      return (
-        <>
-          <div className="grid grid-cols-2 gap-4 pt-6">
-            <div className="flex justify-center">
-              <img className="h-12" src={props.logo} alt="Company Logo" />
-            </div>
-            <div className="text-center flex items-center"></div>
-          </div>
-          <hr className="mt-4" />
-        </>
-      );
     } else {
       setTextbox(false);
+
+      const { data, error } = useSWR(props.resolver + domain, fetcher);
+
+      if (!data) {
+        setShowstatus(true);
+      }
+
+      if (data && !error) {
+        setShowstatus(true);
+        if (data.Status === 0) {
+          icon = "/available.svg";
+        } else {
+          icon = "/not_available.svg";
+        }
+      }
     }
 
-    const { data, error } = useSWR(props.resolver + domain, fetcher);
-
-    if (!data || error)
-      return (
-        <>
-          <div class="grid grid-cols-2 gap-4 pt-6">
-            <div className="flex justify-center">
-              <img className="h-12" src={props.logo} alt="Company Logo" />
-            </div>
-            <div className="text-center flex justify-center">
-              <img src="./loading.svg" alt="Status" />
-            </div>
-          </div>
-          <hr className="mt-4" />
-        </>
-      );
-    // render data
-    var icon = "/not_available.svg";
-    if (data.Status === 0) {
-      icon = "/available.svg";
-    }
-    console.log(data);
     return (
       <>
         <div class="grid grid-cols-2 gap-4 pt-6">
@@ -74,7 +59,7 @@ export default function Home() {
             <img className="h-12" src={props.logo} alt="Company Logo" />
           </div>
           <div className="text-center flex justify-center">
-            <img src={icon} alt="Status" />
+            {showstatus ? <img src={icon} alt="Status" /> : ""}
           </div>
         </div>
         <hr className="mt-4" />
