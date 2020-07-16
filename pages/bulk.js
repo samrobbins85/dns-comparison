@@ -81,7 +81,7 @@ export default function Bulk() {
           </h1>
 
           <p className="description text-center text-xl text-gray-700 mb-6">
-            Upload a URL using the button below
+            Upload a File using the button below
           </p>
           <form className="text-center flex justify-center">
             <input type="file" id="input" onChange={FileChange} />

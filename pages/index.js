@@ -97,7 +97,7 @@ export default function Home() {
         <h1 className="title text-center text-5xl font-bold">DNS Comparison</h1>
 
         <p className="description text-center text-xl text-gray-700 mb-6">
-          Enter a URL in the textbox below to compare it on different DNS
+          Enter a domain in the textbox below to compare it on different DNS
           providers
         </p>
 
