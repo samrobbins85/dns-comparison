@@ -86,13 +86,13 @@ export default function Bulk() {
           <form className="text-center flex justify-center">
             <input type="file" id="input" onChange={FileChange} />
           </form>
-          <div class="grid grid-cols-4 gap-4  pt-4">
+          <div className="grid grid-cols-4 gap-4  pt-4">
             <div>Domain</div>
             <div>Cloudflare</div>
             <div>Google</div>
             <div>Quad9</div>
             {file.map((domain) => (
-              <DomainResult domain={domain} />
+              <DomainResult domain={domain} key={domain} />
             ))}
           </div>
         </main>
