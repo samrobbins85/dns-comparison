@@ -34,7 +34,7 @@ export default function Home() {
         <>
           <div className="grid grid-cols-2 gap-4 pt-6">
             <div className="flex justify-center">
-              <img className="h-12" src={props.logo} alt="Vercel Logo" />
+              <img className="h-12" src={props.logo} alt="Company Logo" />
             </div>
             <div className="text-center flex items-center"></div>
           </div>
@@ -52,10 +52,10 @@ export default function Home() {
         <>
           <div class="grid grid-cols-2 gap-4 pt-6">
             <div className="flex justify-center">
-              <img className="h-12" src={props.logo} alt="Vercel Logo" />
+              <img className="h-12" src={props.logo} alt="Company Logo" />
             </div>
             <div className="text-center flex justify-center">
-              <img src="./loading.svg" alt="Vercel Logo" className="logo" />
+              <img src="./loading.svg" alt="Status" />
             </div>
           </div>
           <hr className="mt-4" />
@@ -71,10 +71,10 @@ export default function Home() {
       <>
         <div class="grid grid-cols-2 gap-4 pt-6">
           <div className="flex justify-center">
-            <img className="h-12" src={props.logo} alt="Vercel Logo" />
+            <img className="h-12" src={props.logo} alt="Company Logo" />
           </div>
           <div className="text-center flex justify-center">
-            <img src={icon} alt="Vercel Logo" className="logo" />
+            <img src={icon} alt="Status" />
           </div>
         </div>
         <hr className="mt-4" />
@@ -128,21 +128,21 @@ export default function Home() {
       <div className="flex justify-center text-2xl font-bold">Key</div>
       <div className="grid grid-cols-2">
         <div className="text-gray-700 text-center px-4 m-2  flex justify-end">
-          <img src="./loading.svg" alt="Vercel Logo" className="logo" />
+          <img src="./loading.svg" alt="Loading" />
         </div>
         <div className="text-gray-700 text-center px-4  m-2 flex justify-start items-center">
           Loading
         </div>
 
         <div className="text-gray-700 text-center px-4 m-2 flex justify-end">
-          <img src="./available.svg" alt="Vercel Logo" className="logo" />
+          <img src="./available.svg" alt="Resolved" />
         </div>
         <div className="text-gray-700 text-center px-4  m-2 flex justify-start items-center">
           Resolved
         </div>
 
         <div className="text-gray-700 text-center px-4 m-2 flex justify-end">
-          <img src="./not_available.svg" alt="Vercel Logo" className="logo" />
+          <img src="./not_available.svg" alt="Can't Resolve" />
         </div>
         <div className="text-gray-700 text-center px-4  m-2 flex justify-start items-center">
           Can't resolve
