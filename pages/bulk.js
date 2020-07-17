@@ -120,9 +120,7 @@ export default function Bulk() {
           <form className="text-center flex justify-center">
             <input type="file" id="input" onChange={FileChange} />
           </form>
-          <div className="flex justify-center p-4">
-            <Table columns={columns} data={data} />
-          </div>
+          <Table columns={columns} data={data} />
         </main>
       </div>
     </>
