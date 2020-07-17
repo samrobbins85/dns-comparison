@@ -2,57 +2,104 @@ import React, { useState } from "react";
 import useSWR from "swr";
 import Head from "next/head";
 import NavBar from "../components/navbar";
+import { useTable } from "react-table";
 function FetchDomain(props) {
   if (props.domain === "") {
     return "";
   }
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
   const { data, error } = useSWR(props.resolver + props.domain, fetcher);
-  if (!data || error)
-    return <img src="./loading.svg" alt="Loading" className="logo" />;
+  if (!data || error) return "Loading";
   if (data.Status === 0) {
-    return <img src="./available.svg" alt="Available" className="logo" />;
+    return "Available";
   } else {
-    return (
-      <img src="./not_available.svg" alt="Not Available" className="logo" />
-    );
+    return "Not Available";
   }
-}
-
-function DomainResult(props) {
-  return (
-    <>
-      <div>{props.domain}</div>
-      <div>
-        <FetchDomain
-          resolver="https://Cloudflare-dns.com/dns-query?ct=application/dns-json&type=A&name="
-          domain={props.domain}
-        />
-      </div>
-      <div>
-        <FetchDomain
-          resolver="https://dns.google/resolve?name="
-          domain={props.domain}
-        />
-      </div>
-      <div>
-        <FetchDomain
-          resolver="https://dns.quad9.net:5053/dns-query?name="
-          domain={props.domain}
-        />
-      </div>
-    </>
-  );
 }
 
 export default function Bulk() {
   const [file, setFile] = useState([""]);
 
+  function fetchDomains() {
+    var output = [];
+    file.forEach((element) => {
+      output.push({
+        domain: element,
+        cloudflare: (
+          <FetchDomain
+            domain={element}
+            resolver={
+              "https://Cloudflare-dns.com/dns-query?ct=application/dns-json&type=AAAA&name="
+            }
+          />
+        ),
+        google: (
+          <FetchDomain
+            domain={element}
+            resolver={"https://dns.google/resolve?name="}
+          />
+        ),
+        Quad9: (
+          <FetchDomain
+            domain={element}
+            resolver={"https://dns.quad9.net:5053/dns-query?name="}
+          />
+        ),
+      });
+    });
+    console.log(output);
+
+    return output;
+  }
+
+  const data = React.useMemo(() => fetchDomains());
+
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: "Domain",
+
+        accessor: "domain", // accessor is the "key" in the data
+      },
+
+      {
+        Header: "Cloudflare",
+
+        accessor: "cloudflare",
+      },
+
+      {
+        Header: "Google",
+
+        accessor: "google",
+      },
+
+      {
+        Header: "Quad9",
+
+        accessor: "Quad9",
+      },
+    ],
+
+    []
+  );
+
+  const {
+    getTableProps,
+
+    getTableBodyProps,
+
+    headerGroups,
+
+    rows,
+
+    prepareRow,
+  } = useTable({ columns, data });
+
   function FileChange(event) {
     var file = event.target.files[0];
     var reader = new FileReader();
     reader.onload = function (event) {
-      console.log("First log");
       setFile(
         event.target.result.split(/r?\n/).filter(function (e) {
           return e;
@@ -60,7 +107,6 @@ export default function Bulk() {
       );
       console.log(event.target.result.split(/r?\n/));
     };
-    // console.log("Second log");
     reader.readAsText(file);
   }
 
@@ -86,16 +132,44 @@ export default function Bulk() {
           <form className="text-center flex justify-center">
             <input type="file" id="input" onChange={FileChange} />
           </form>
-          <div className="flex justify-center">
-            <div className="grid grid-cols-4 gap-4 pt-4 container">
-              <div>Domain</div>
-              <div>Cloudflare</div>
-              <div>Google</div>
-              <div>Quad9</div>
-              {file.map((domain) => (
-                <DomainResult domain={domain} key={domain} />
-              ))}
-            </div>
+          <div className="flex justify-center p-4">
+            <table {...getTableProps()} className="table-auto">
+              <thead>
+                {headerGroups.map((headerGroup) => (
+                  <tr {...headerGroup.getHeaderGroupProps()}>
+                    {headerGroup.headers.map((column) => (
+                      <th
+                        {...column.getHeaderProps()}
+                        className="border border-solid border-gray-500 p-2"
+                      >
+                        {column.render("Header")}
+                      </th>
+                    ))}
+                  </tr>
+                ))}
+              </thead>
+
+              <tbody {...getTableBodyProps()}>
+                {rows.map((row) => {
+                  prepareRow(row);
+
+                  return (
+                    <tr {...row.getRowProps()}>
+                      {row.cells.map((cell) => {
+                        return (
+                          <td
+                            {...cell.getCellProps()}
+                            className="border border-gray-400 p-4"
+                          >
+                            {cell.render("Cell")}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
         </main>
       </div>
