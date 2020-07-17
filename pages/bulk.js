@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import useSWR from "swr";
 import Head from "next/head";
 import NavBar from "../components/navbar";
-import { useTable } from "react-table";
+import Table from "../components/table";
 function FetchDomain(props) {
   if (props.domain === "") {
     return "";
@@ -84,18 +84,6 @@ export default function Bulk() {
     []
   );
 
-  const {
-    getTableProps,
-
-    getTableBodyProps,
-
-    headerGroups,
-
-    rows,
-
-    prepareRow,
-  } = useTable({ columns, data });
-
   function FileChange(event) {
     var file = event.target.files[0];
     var reader = new FileReader();
@@ -133,43 +121,7 @@ export default function Bulk() {
             <input type="file" id="input" onChange={FileChange} />
           </form>
           <div className="flex justify-center p-4">
-            <table {...getTableProps()} className="table-auto">
-              <thead>
-                {headerGroups.map((headerGroup) => (
-                  <tr {...headerGroup.getHeaderGroupProps()}>
-                    {headerGroup.headers.map((column) => (
-                      <th
-                        {...column.getHeaderProps()}
-                        className="border border-solid border-gray-500 p-2"
-                      >
-                        {column.render("Header")}
-                      </th>
-                    ))}
-                  </tr>
-                ))}
-              </thead>
-
-              <tbody {...getTableBodyProps()}>
-                {rows.map((row) => {
-                  prepareRow(row);
-
-                  return (
-                    <tr {...row.getRowProps()}>
-                      {row.cells.map((cell) => {
-                        return (
-                          <td
-                            {...cell.getCellProps()}
-                            className="border border-gray-400 p-4"
-                          >
-                            {cell.render("Cell")}
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+            <Table columns={columns} data={data} />
           </div>
         </main>
       </div>
