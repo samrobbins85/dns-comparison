@@ -8,6 +8,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "axios": "^0.19.2",
+    "extract-domain": "^2.2.1",
     "is-valid-domain": "0.0.14",
     "next": "9.4.4",
     "postcss-preset-env": "^6.7.0",
