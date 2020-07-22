@@ -1,3 +1,5 @@
+![GitHub](https://img.shields.io/github/license/samrobbins85/dns-comparison?style=for-the-badge)
+![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m785610728-8c502e35a61c7e11767072c7?style=for-the-badge)
 # DNS comparison
 This application compares the blocking capability of the major DNS providers
 
