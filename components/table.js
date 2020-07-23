@@ -41,7 +41,7 @@ export default function Table({ columns, data }) {
                   {headerGroup.headers.map((column) => (
                     <th
                       {...column.getHeaderProps()}
-                      className="w-1/4 border border-solid border-gray-500 p-2"
+                      className="w-1/4 p-2 border border-gray-500 border-solid"
                     >
                       {column.render("Header")}
                     </th>
@@ -59,7 +59,7 @@ export default function Table({ columns, data }) {
                       return (
                         <td
                           {...cell.getCellProps()}
-                          className="border border-gray-400 p-2"
+                          className="p-2 border border-gray-400"
                         >
                           {cell.render("Cell")}
                         </td>
@@ -134,7 +134,7 @@ export default function Table({ columns, data }) {
                 const page = e.target.value ? Number(e.target.value) - 1 : 0;
                 gotoPage(page);
               }}
-              className="form-input mx-2"
+              className="mx-2 form-input"
               style={{ width: "100px" }}
             />
           </span>

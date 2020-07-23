@@ -33,7 +33,7 @@ export default function Home() {
           <div className="flex justify-center">
             <img className="h-12" src={props.logo} alt="Company Logo" />
           </div>
-          <div className="text-center flex justify-center">
+          <div className="flex justify-center text-center">
             <img src={icon} alt="status" />
           </div>
         </div>
@@ -74,7 +74,7 @@ export default function Home() {
   }, [domain]);
 
   return (
-    <div className="bg-white flex flex-col h-screen">
+    <div className="flex flex-col h-screen bg-white">
       <NavBar />
       <Head>
         <title>DNS Comparison</title>
@@ -84,10 +84,10 @@ export default function Home() {
         />
       </Head>
 
-      <main className="flex-grow mx-auto p-8">
-        <h1 className="title text-center text-5xl font-bold">DNS Comparison</h1>
+      <main className="flex-grow p-8 mx-auto">
+        <h1 className="text-5xl font-bold text-center title">DNS Comparison</h1>
 
-        <p className="description text-center text-xl text-gray-700 mb-6">
+        <p className="mb-6 text-xl text-center text-gray-700 description">
           Enter a domain in the textbox below to compare it on different DNS
           providers
         </p>

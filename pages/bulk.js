@@ -155,17 +155,17 @@ export default function Bulk() {
           href="https://www.globalcyberalliance.org/wp-content/uploads/favicon.png"
         />
       </Head>
-      <div className="bg-white flex flex-col h-screen">
+      <div className="flex flex-col h-screen bg-white">
         <NavBar />
         <main className="flex-grow p-8">
-          <h1 className="title text-center text-5xl font-bold">
+          <h1 className="text-5xl font-bold text-center title">
             DNS Comparison
           </h1>
 
-          <p className="description text-center text-xl text-gray-700 mb-6">
+          <p className="mb-6 text-xl text-center text-gray-700 description">
             Upload a File using the button below
           </p>
-          <form className="text-center flex justify-center">
+          <form className="flex justify-center text-center">
             <input type="file" id="input" onChange={FileChange} />
           </form>
           <div>
