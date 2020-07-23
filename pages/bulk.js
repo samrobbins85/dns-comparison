@@ -8,6 +8,21 @@ import { Bar } from "react-chartjs-2";
 export default function Bulk() {
   const [file, setFile] = useState([""]);
   const [cf, setCF] = useState([""]);
+  const [chart, setChart] = useState({
+    labels: ["Cloudflare", "Google", "Quad9"],
+
+    datasets: [
+      {
+        label: "Blocks",
+        backgroundColor: "rgba(255,99,132,0.2)",
+        borderColor: "rgba(255,99,132,1)",
+        borderWidth: 1,
+        hoverBackgroundColor: "rgba(255,99,132,0.4)",
+        hoverBorderColor: "rgba(255,99,132,1)",
+        data: [1, 1, 1],
+      },
+    ],
+  });
 
   useEffect(() => {
     var requests = [];
@@ -27,7 +42,19 @@ export default function Bulk() {
           axios.spread((...responses) => {
             var data = [];
             var i;
+            var quad1 = 0;
+            var quad8 = 0;
+            var quad9 = 0;
             for (i = 0; i < responses.length; i += 3) {
+              if (responses[i].data.Status !== 0) {
+                quad1++;
+              }
+              if (responses[i + 1].data.Status !== 0) {
+                quad8++;
+              }
+              if (responses[i + 2].data.Status !== 0) {
+                quad9++;
+              }
               data.push({
                 domain: file[i / 3],
                 cloudflare: responses[i].data.Status,
@@ -35,15 +62,33 @@ export default function Bulk() {
                 Quad9: responses[i + 2].data.Status,
               });
             }
+            // setBlock1(quad1);
+            // setBlock8(quad8);
+            // setBlock9(quad9);
             setCF(data);
+            setChart({
+              labels: ["Cloudflare", "Google", "Quad9"],
+              datasets: [
+                {
+                  label: "Blocks",
+                  backgroundColor: "rgba(255,99,132,0.2)",
+                  borderColor: "rgba(255,99,132,1)",
+                  borderWidth: 1,
+                  hoverBackgroundColor: "rgba(255,99,132,0.4)",
+                  hoverBorderColor: "rgba(255,99,132,1)",
+                  data: [quad1, quad8, quad9],
+                },
+              ],
+            });
           })
         )
         .catch((errors) => {
           setCF([]);
         });
     };
-
+    console.log("Start fetching data");
     fetchData();
+    console.log(cf);
   }, [file]);
 
   const columns = React.useMemo(
@@ -90,21 +135,17 @@ export default function Bulk() {
     reader.readAsText(file);
   }
 
-  const data = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
-    datasets: [
-      {
-        label: "My First dataset",
-        backgroundColor: "rgba(255,99,132,0.2)",
-        borderColor: "rgba(255,99,132,1)",
-        borderWidth: 1,
-        hoverBackgroundColor: "rgba(255,99,132,0.4)",
-        hoverBorderColor: "rgba(255,99,132,1)",
-        data: [65, 59, 80, 81, 56, 55, 40],
-      },
-    ],
+  const scale = {
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+          },
+        },
+      ],
+    },
   };
-
   return (
     <>
       <Head>
@@ -129,14 +170,7 @@ export default function Bulk() {
           </form>
           <div>
             <h2>Bar Example (custom size)</h2>
-            <Bar
-              data={data}
-              width={100}
-              height={20}
-              options={{
-                maintainAspectRatio: true,
-              }}
-            />
+            <Bar data={chart} width={100} height={20} options={scale} />
           </div>
           <Table columns={columns} data={cf} />
         </main>
