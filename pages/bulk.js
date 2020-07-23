@@ -1,58 +1,50 @@
-import React, { useState } from "react";
-import useSWR from "swr";
+import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import NavBar from "../components/navbar";
 import Table from "../components/table";
-function FetchDomain(props) {
-  if (props.domain === "") {
-    return "";
-  }
-  const fetcher = (...args) => fetch(...args).then((res) => res.json());
-  const { data, error } = useSWR(props.resolver + props.domain, fetcher);
-  if (!data || error) return "Loading";
-  if (data.Status === 0) {
-    return "Available";
-  } else {
-    return "Not Available";
-  }
-}
+import axios from "axios";
+import { Bar } from "react-chartjs-2";
 
 export default function Bulk() {
   const [file, setFile] = useState([""]);
+  const [cf, setCF] = useState([""]);
 
-  function fetchDomains() {
-    var output = [];
-    file.forEach((element) => {
-      output.push({
-        domain: element,
-        cloudflare: (
-          <FetchDomain
-            domain={element}
-            resolver={
-              "https://Cloudflare-dns.com/dns-query?ct=application/dns-json&type=AAAA&name="
-            }
-          />
+  useEffect(() => {
+    var requests = [];
+    file.forEach((domain) => {
+      requests.push(
+        axios.get(
+          `https://Cloudflare-dns.com/dns-query?ct=application/dns-json&type=AAAA&name=${domain}`
         ),
-        google: (
-          <FetchDomain
-            domain={element}
-            resolver={"https://dns.google/resolve?name="}
-          />
-        ),
-        Quad9: (
-          <FetchDomain
-            domain={element}
-            resolver={"https://dns.quad9.net:5053/dns-query?name="}
-          />
-        ),
-      });
+        axios.get(`https://dns.google/resolve?name=${domain}`),
+        axios.get(`https://dns.quad9.net:5053/dns-query?name=${domain}`)
+      );
     });
-    console.log(output);
+    const fetchData = async () => {
+      axios
+        .all(requests)
+        .then(
+          axios.spread((...responses) => {
+            var data = [];
+            var i;
+            for (i = 0; i < responses.length; i += 3) {
+              data.push({
+                domain: file[i / 3],
+                cloudflare: responses[i].data.Status,
+                google: responses[i + 1].data.Status,
+                Quad9: responses[i + 2].data.Status,
+              });
+            }
+            setCF(data);
+          })
+        )
+        .catch((errors) => {
+          setCF([]);
+        });
+    };
 
-    return output;
-  }
-
-  const data = React.useMemo(() => fetchDomains());
+    fetchData();
+  }, [file]);
 
   const columns = React.useMemo(
     () => [
@@ -98,6 +90,21 @@ export default function Bulk() {
     reader.readAsText(file);
   }
 
+  const data = {
+    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    datasets: [
+      {
+        label: "My First dataset",
+        backgroundColor: "rgba(255,99,132,0.2)",
+        borderColor: "rgba(255,99,132,1)",
+        borderWidth: 1,
+        hoverBackgroundColor: "rgba(255,99,132,0.4)",
+        hoverBorderColor: "rgba(255,99,132,1)",
+        data: [65, 59, 80, 81, 56, 55, 40],
+      },
+    ],
+  };
+
   return (
     <>
       <Head>
@@ -120,7 +127,18 @@ export default function Bulk() {
           <form className="text-center flex justify-center">
             <input type="file" id="input" onChange={FileChange} />
           </form>
-          <Table columns={columns} data={data} />
+          <div>
+            <h2>Bar Example (custom size)</h2>
+            <Bar
+              data={data}
+              width={100}
+              height={20}
+              options={{
+                maintainAspectRatio: true,
+              }}
+            />
+          </div>
+          <Table columns={columns} data={cf} />
         </main>
       </div>
     </>
