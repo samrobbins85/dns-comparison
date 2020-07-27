@@ -18,7 +18,7 @@
     "react-chartjs-2": "^2.9.0",
     "react-dom": "16.13.1",
     "react-table": "^7.3.2",
-    "tailwindcss": "^1.4.6"
+    "tailwindcss": "^1.5.2"
   },
   "devDependencies": {
     "@tailwindcss/custom-forms": "^0.2.1",
