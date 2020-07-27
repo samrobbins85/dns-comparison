@@ -23,6 +23,6 @@
   "devDependencies": {
     "@tailwindcss/custom-forms": "^0.2.1",
     "eslint": "^7.5.0",
-    "eslint-plugin-react": "^7.20.3"
+    "eslint-plugin-react": "^7.20.4"
   }
 }
