@@ -86,34 +86,32 @@ export default function Bulk() {
 					setCF([]);
 				});
 		};
-		console.log("Start fetching data");
 		fetchData();
-		console.log(cf);
 	}, [file]);
 
 	const columns = React.useMemo(
 		() => [
 			{
 				Header: "Domain",
-
+				className: "w-1/4 p-2 border border-gray-500 border-solid",
 				accessor: "domain", // accessor is the "key" in the data
 			},
 
 			{
 				Header: "Cloudflare",
-
+				className: "w-1/12 p-2 border border-gray-500 border-solid",
 				accessor: "cloudflare",
 			},
 
 			{
 				Header: "Google",
-
+				className: "w-1/12 p-2 border border-gray-500 border-solid",
 				accessor: "google",
 			},
 
 			{
 				Header: "Quad9",
-
+				className: "w-1/12 p-2 border border-gray-500 border-solid",
 				accessor: "Quad9",
 			},
 		],
@@ -130,7 +128,6 @@ export default function Bulk() {
 					return e;
 				})
 			);
-			console.log(event.target.result.split(/r?\n/));
 		};
 		reader.readAsText(file);
 	}

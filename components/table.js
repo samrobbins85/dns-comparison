@@ -29,20 +29,21 @@ export default function Table({ columns, data }) {
 		},
 		usePagination
 	);
-
 	// Render the UI for your table
 	return (
 		<div className="grid grid-cols-1">
 			<div className="flex justify-center p-4">
-				<div>
-					<table {...getTableProps()} className="table-fixed">
+				<div className="container flex justify-center">
+					<table {...getTableProps()} className="w-1/2 table-fixed">
 						<thead>
 							{headerGroups.map((headerGroup) => (
 								<tr {...headerGroup.getHeaderGroupProps()}>
 									{headerGroup.headers.map((column) => (
 										<th
-											{...column.getHeaderProps()}
-											className="w-1/4 p-2 border border-gray-500 border-solid"
+											{...column.getHeaderProps([
+												{ className: column.className },
+											])}
+											// className="p-2 border border-gray-500 border-solid"
 											key={column.render("Header")}
 										>
 											{column.render("Header")}
