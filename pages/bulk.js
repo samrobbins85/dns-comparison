@@ -45,13 +45,6 @@ export default function Bulk() {
 						var quad1 = 0;
 						var quad8 = 0;
 						var quad9 = 0;
-						// let output = responses.map(function (response) {
-						// 	if (response.data.Status === 0) {
-						// 		return "Resolved";
-						// 	} else {
-						// 		return "Blocked";
-						// 	}
-						// });
 						let img_output = responses.map(function (response) {
 							if (response.data.Status === 0) {
 								return (
