@@ -45,36 +45,42 @@ export default function Bulk() {
 						var quad1 = 0;
 						var quad8 = 0;
 						var quad9 = 0;
-						let output = responses.map(function (response) {
+						// let output = responses.map(function (response) {
+						// 	if (response.data.Status === 0) {
+						// 		return "Resolved";
+						// 	} else {
+						// 		return "Blocked";
+						// 	}
+						// });
+						let img_output = responses.map(function (response) {
 							if (response.data.Status === 0) {
-								return <img src="/available.svg" />;
+								return (
+									<img src="/available.svg" alt="Available" />
+								);
 							} else {
-								return <img src="/not_available.svg" />;
+								return (
+									<img
+										src="/not_available.svg"
+										alt="Not Available"
+									/>
+								);
 							}
 						});
 						for (i = 0; i < responses.length; i += 3) {
-							if (
-								output[i] === <img src="/not_available.svg" />
-							) {
+							if (responses[i].data.Status !== 0) {
 								quad1++;
 							}
-							if (
-								output[i + 1] ===
-								<img src="/not_available.svg" />
-							) {
+							if (responses[i + 1].data.Status !== 0) {
 								quad8++;
 							}
-							if (
-								output[i + 2] ===
-								<img src="/not_available.svg" />
-							) {
+							if (responses[i + 2].data.Status !== 0) {
 								quad9++;
 							}
 							data.push({
 								domain: file[i / 3],
-								cloudflare: output[i],
-								google: output[i + 1],
-								Quad9: output[i + 2],
+								cloudflare: img_output[i],
+								google: img_output[i + 1],
+								Quad9: img_output[i + 2],
 							});
 						}
 						setCF(data);
