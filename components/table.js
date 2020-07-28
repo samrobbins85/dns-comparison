@@ -34,7 +34,10 @@ export default function Table({ columns, data }) {
 		<div className="grid grid-cols-1">
 			<div className="flex justify-center p-4">
 				<div className="container flex justify-center">
-					<table {...getTableProps()} className="w-1/2 table-fixed">
+					<table
+						{...getTableProps()}
+						className="table-fixed overflow-auto"
+					>
 						<thead>
 							{headerGroups.map((headerGroup) => (
 								<tr {...headerGroup.getHeaderGroupProps()}>
@@ -62,7 +65,7 @@ export default function Table({ columns, data }) {
 											return (
 												<td
 													{...cell.getCellProps()}
-													className="p-2 border border-gray-400"
+													className="p-2 text-center border border-gray-400"
 												>
 													{cell.render("Cell")}
 												</td>

@@ -48,12 +48,17 @@ export default function Bulk() {
 						let img_output = responses.map(function (response) {
 							if (response.data.Status === 0) {
 								return (
-									<img src="/available.svg" alt="Available" />
+									<img
+										src="/available.svg"
+										className="block ml-auto mr-auto"
+										alt="Available"
+									/>
 								);
 							} else {
 								return (
 									<img
 										src="/not_available.svg"
+										className="block ml-auto mr-auto"
 										alt="Not Available"
 									/>
 								);
@@ -133,6 +138,7 @@ export default function Bulk() {
 	}
 
 	const scale = {
+		maintainAspectRatio: true,
 		scales: {
 			yAxes: [
 				{
@@ -165,15 +171,10 @@ export default function Bulk() {
 					<form className="flex justify-center text-center">
 						<input type="file" id="input" onChange={FileChange} />
 					</form>
-					<div className="flex justify-center">
+					<div className="flex justify-center overflow-auto">
 						<div className="container">
 							<h2>Number of blocks comparison</h2>
-							<Bar
-								data={chart}
-								width={100}
-								height={20}
-								options={scale}
-							/>
+							<Bar data={chart} options={scale} />
 						</div>
 					</div>
 					<Table columns={columns} data={cf} />
