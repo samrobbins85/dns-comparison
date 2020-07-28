@@ -43,6 +43,7 @@ export default function Table({ columns, data }) {
 										<th
 											{...column.getHeaderProps()}
 											className="w-1/4 p-2 border border-gray-500 border-solid"
+											key={column.render("Header")}
 										>
 											{column.render("Header")}
 										</th>
