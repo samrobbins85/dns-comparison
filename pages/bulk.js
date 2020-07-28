@@ -45,21 +45,36 @@ export default function Bulk() {
 						var quad1 = 0;
 						var quad8 = 0;
 						var quad9 = 0;
+						let output = responses.map(function (response) {
+							if (response.data.Status === 0) {
+								return <img src="/available.svg" />;
+							} else {
+								return <img src="/not_available.svg" />;
+							}
+						});
 						for (i = 0; i < responses.length; i += 3) {
-							if (responses[i].data.Status !== 0) {
+							if (
+								output[i] === <img src="/not_available.svg" />
+							) {
 								quad1++;
 							}
-							if (responses[i + 1].data.Status !== 0) {
+							if (
+								output[i + 1] ===
+								<img src="/not_available.svg" />
+							) {
 								quad8++;
 							}
-							if (responses[i + 2].data.Status !== 0) {
+							if (
+								output[i + 2] ===
+								<img src="/not_available.svg" />
+							) {
 								quad9++;
 							}
 							data.push({
 								domain: file[i / 3],
-								cloudflare: responses[i].data.Status,
-								google: responses[i + 1].data.Status,
-								Quad9: responses[i + 2].data.Status,
+								cloudflare: output[i],
+								google: output[i + 1],
+								Quad9: output[i + 2],
 							});
 						}
 						setCF(data);
