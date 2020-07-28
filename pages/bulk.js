@@ -169,14 +169,16 @@ export default function Bulk() {
 					<form className="flex justify-center text-center">
 						<input type="file" id="input" onChange={FileChange} />
 					</form>
-					<div>
-						<h2>Number of blocks comparison</h2>
-						<Bar
-							data={chart}
-							width={100}
-							height={20}
-							options={scale}
-						/>
+					<div className="flex justify-center">
+						<div className="container">
+							<h2>Number of blocks comparison</h2>
+							<Bar
+								data={chart}
+								width={100}
+								height={20}
+								options={scale}
+							/>
+						</div>
 					</div>
 					<Table columns={columns} data={cf} />
 				</main>
