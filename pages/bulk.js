@@ -7,6 +7,7 @@ import { Bar } from "react-chartjs-2";
 
 export default function Bulk() {
 	const [file, setFile] = useState([""]);
+	const [filepresent, setFilepresent] = useState(false);
 	const [cf, setCF] = useState([""]);
 	const [chart, setChart] = useState({
 		labels: ["Cloudflare", "Google", "Quad9"],
@@ -125,6 +126,7 @@ export default function Bulk() {
 	);
 
 	function FileChange(event) {
+		setFilepresent(true);
 		var file = event.target.files[0];
 		var reader = new FileReader();
 		reader.onload = function (event) {
@@ -171,13 +173,17 @@ export default function Bulk() {
 					<form className="flex justify-center text-center">
 						<input type="file" id="input" onChange={FileChange} />
 					</form>
-					<div className="flex justify-center overflow-auto">
-						<div className="container">
-							<h2>Number of blocks comparison</h2>
-							<Bar data={chart} options={scale} />
-						</div>
-					</div>
-					<Table columns={columns} data={cf} />
+					{filepresent && (
+						<>
+							<div className="flex justify-center overflow-auto">
+								<div className="container">
+									<h2>Number of blocks comparison</h2>
+									<Bar data={chart} options={scale} />
+								</div>
+							</div>
+							<Table columns={columns} data={cf} />{" "}
+						</>
+					)}
 				</main>
 			</div>
 		</>
