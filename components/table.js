@@ -38,15 +38,11 @@ export default function Table({ columns, data }) {
 					<table {...getTableProps()} className="table-fixed">
 						<thead>
 							{headerGroups.map((headerGroup) => (
-								<tr
-									{...headerGroup.getHeaderGroupProps()}
-									key="Header-row"
-								>
+								<tr {...headerGroup.getHeaderGroupProps()}>
 									{headerGroup.headers.map((column) => (
 										<th
 											{...column.getHeaderProps()}
 											className="w-1/4 p-2 border border-gray-500 border-solid"
-											key="Header"
 										>
 											{column.render("Header")}
 										</th>
@@ -59,13 +55,12 @@ export default function Table({ columns, data }) {
 							{page.map((row) => {
 								prepareRow(row);
 								return (
-									<tr {...row.getRowProps()} key={row}>
+									<tr {...row.getRowProps()}>
 										{row.cells.map((cell) => {
 											return (
 												<td
 													{...cell.getCellProps()}
 													className="p-2 border border-gray-400"
-													key={cell}
 												>
 													{cell.render("Cell")}
 												</td>

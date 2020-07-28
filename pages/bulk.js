@@ -62,25 +62,10 @@ export default function Bulk() {
 								Quad9: responses[i + 2].data.Status,
 							});
 						}
-						// setBlock1(quad1);
-						// setBlock8(quad8);
-						// setBlock9(quad9);
 						setCF(data);
-						setChart({
-							labels: ["Cloudflare", "Google", "Quad9"],
-							datasets: [
-								{
-									label: "Blocks",
-									backgroundColor: "rgba(255,99,132,0.2)",
-									borderColor: "rgba(255,99,132,1)",
-									borderWidth: 1,
-									hoverBackgroundColor:
-										"rgba(255,99,132,0.4)",
-									hoverBorderColor: "rgba(255,99,132,1)",
-									data: [quad1, quad8, quad9],
-								},
-							],
-						});
+						let old = { ...chart };
+						old.datasets[0].data = [quad1, quad8, quad9];
+						setChart(old);
 					})
 				)
 				.catch(() => {
