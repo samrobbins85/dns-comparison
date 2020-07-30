@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
+import dynamic from "next/dynamic";
 import NavBar from "../components/navbar";
-import Table from "../components/table";
+const Table = dynamic(() => import("../components/table"));
 import axios from "axios";
 import { Bar } from "react-chartjs-2";
 
