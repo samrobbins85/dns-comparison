@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import NavBar from "../components/navbar";
 const Table = dynamic(() => import("../components/table"));
 import axios from "axios";
-import { Bar } from "react-chartjs-2";
+const Bar = dynamic(() => import("react-chartjs-2").then((mod) => mod.Bar));
 
 export default function Bulk() {
 	const [file, setFile] = useState(false);
