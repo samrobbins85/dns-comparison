@@ -51,34 +51,39 @@ export default function Home() {
 	};
 
 	useEffect(() => {
-		const cloudflare = axios.get(
-			`https://Cloudflare-dns.com/dns-query?ct=application/dns-json&type=AAAA&name=${domain}`
-		);
-		const google = axios.get(`https://dns.google/resolve?name=${domain}`);
-		const quad9 = axios.get(
-			`https://dns.quad9.net:5053/dns-query?name=${domain}`
-		);
-		const fetchData = async () => {
-			axios
-				.all([cloudflare, google, quad9])
-				.then(
-					axios.spread((...responses) => {
-						const responseOne = responses[0];
-						const responseTwo = responses[1];
-						const responesThree = responses[2];
-						setResult([
-							responseOne.data.Status,
-							responseTwo.data.Status,
-							responesThree.data.Status,
-						]);
-					})
-				)
-				.catch(() => {
-					setResult([-1, -1, -1]);
-				});
-		};
-
-		fetchData();
+		if (domain !== "") {
+			const cloudflare = axios.get(
+				`https://Cloudflare-dns.com/dns-query?ct=application/dns-json&type=AAAA&name=${domain}`
+			);
+			const google = axios.get(
+				`https://dns.google/resolve?name=${domain}`
+			);
+			const quad9 = axios.get(
+				`https://dns.quad9.net:5053/dns-query?name=${domain}`
+			);
+			const fetchData = async () => {
+				axios
+					.all([cloudflare, google, quad9])
+					.then(
+						axios.spread((...responses) => {
+							const responseOne = responses[0];
+							const responseTwo = responses[1];
+							const responesThree = responses[2];
+							setResult([
+								responseOne.data.Status,
+								responseTwo.data.Status,
+								responesThree.data.Status,
+							]);
+						})
+					)
+					.catch(() => {
+						setResult([-1, -1, -1]);
+					});
+			};
+			fetchData();
+		} else {
+			setResult([1, 1, 1]);
+		}
 	}, [domain]);
 
 	return (
