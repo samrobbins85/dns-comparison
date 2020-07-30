@@ -6,7 +6,7 @@ import axios from "axios";
 import { Bar } from "react-chartjs-2";
 
 export default function Bulk() {
-	const [file, setFile] = useState([""]);
+	const [file, setFile] = useState(false);
 	const [filepresent, setFilepresent] = useState(false);
 	const [cf, setCF] = useState([""]);
 	const [fileName, setFileName] = useState(false);
@@ -27,73 +27,78 @@ export default function Bulk() {
 	});
 
 	useEffect(() => {
-		var requests = [];
-		file.forEach((domain) => {
-			requests.push(
-				axios.get(
-					`https://Cloudflare-dns.com/dns-query?ct=application/dns-json&type=AAAA&name=${domain}`
-				),
-				axios.get(`https://dns.google/resolve?name=${domain}`),
-				axios.get(`https://dns.quad9.net:5053/dns-query?name=${domain}`)
-			);
-		});
-		const fetchData = async () => {
-			axios
-				.all(requests)
-				.then(
-					axios.spread((...responses) => {
-						var data = [];
-						var i;
-						var quad1 = 0;
-						var quad8 = 0;
-						var quad9 = 0;
-						let img_output = responses.map(function (response) {
-							if (response.data.Status === 0) {
-								return (
-									<img
-										src="/available.svg"
-										className="block ml-auto mr-auto"
-										alt="Available"
-									/>
-								);
-							} else {
-								return (
-									<img
-										src="/not_available.svg"
-										className="block ml-auto mr-auto"
-										alt="Not Available"
-									/>
-								);
-							}
-						});
-						for (i = 0; i < responses.length; i += 3) {
-							if (responses[i].data.Status !== 0) {
-								quad1++;
-							}
-							if (responses[i + 1].data.Status !== 0) {
-								quad8++;
-							}
-							if (responses[i + 2].data.Status !== 0) {
-								quad9++;
-							}
-							data.push({
-								domain: file[i / 3],
-								cloudflare: img_output[i],
-								google: img_output[i + 1],
-								Quad9: img_output[i + 2],
+		console.log(file);
+		if (file) {
+			var requests = [];
+			file.forEach((domain) => {
+				requests.push(
+					axios.get(
+						`https://Cloudflare-dns.com/dns-query?ct=application/dns-json&type=AAAA&name=${domain}`
+					),
+					axios.get(`https://dns.google/resolve?name=${domain}`),
+					axios.get(
+						`https://dns.quad9.net:5053/dns-query?name=${domain}`
+					)
+				);
+			});
+			const fetchData = async () => {
+				axios
+					.all(requests)
+					.then(
+						axios.spread((...responses) => {
+							var data = [];
+							var i;
+							var quad1 = 0;
+							var quad8 = 0;
+							var quad9 = 0;
+							let img_output = responses.map(function (response) {
+								if (response.data.Status === 0) {
+									return (
+										<img
+											src="/available.svg"
+											className="block ml-auto mr-auto"
+											alt="Available"
+										/>
+									);
+								} else {
+									return (
+										<img
+											src="/not_available.svg"
+											className="block ml-auto mr-auto"
+											alt="Not Available"
+										/>
+									);
+								}
 							});
-						}
-						setCF(data);
-						let old = { ...chart };
-						old.datasets[0].data = [quad1, quad8, quad9];
-						setChart(old);
-					})
-				)
-				.catch(() => {
-					setCF([]);
-				});
-		};
-		fetchData();
+							for (i = 0; i < responses.length; i += 3) {
+								if (responses[i].data.Status !== 0) {
+									quad1++;
+								}
+								if (responses[i + 1].data.Status !== 0) {
+									quad8++;
+								}
+								if (responses[i + 2].data.Status !== 0) {
+									quad9++;
+								}
+								data.push({
+									domain: file[i / 3],
+									cloudflare: img_output[i],
+									google: img_output[i + 1],
+									Quad9: img_output[i + 2],
+								});
+							}
+							setCF(data);
+							let old = { ...chart };
+							old.datasets[0].data = [quad1, quad8, quad9];
+							setChart(old);
+						})
+					)
+					.catch(() => {
+						setCF([]);
+					});
+			};
+			fetchData();
+		}
 	}, [file]);
 
 	const columns = React.useMemo(
@@ -162,6 +167,10 @@ export default function Bulk() {
 					rel="icon"
 					href="https://www.globalcyberalliance.org/wp-content/uploads/favicon.png"
 				/>
+				<meta
+					name="Description"
+					content="A tool to compare DNS Services"
+				/>
 			</Head>
 			<div className="flex flex-col h-screen bg-white">
 				<NavBar />
@@ -173,7 +182,7 @@ export default function Bulk() {
 					<p className="text-xl text-center text-gray-700 description">
 						Process a File using the button below
 					</p>
-					<p className="text-center text-gray-600 mb-6">
+					<p className="text-center text-gray-700 mb-6">
 						These files are not uploaded, they stay on your computer
 						and are processed in the browser
 					</p>
