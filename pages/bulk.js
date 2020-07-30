@@ -167,11 +167,15 @@ export default function Bulk() {
 				<NavBar />
 				<main className="flex-grow p-8">
 					<h1 className="text-5xl font-bold text-center title">
-						DNS Comparison
+						Bulk Comparison
 					</h1>
 
-					<p className="mb-6 text-xl text-center text-gray-700 description">
-						Upload a File using the button below
+					<p className="text-xl text-center text-gray-700 description">
+						Process a File using the button below
+					</p>
+					<p className="text-center text-gray-600 mb-6">
+						These files are not uploaded, they stay on your computer
+						and are processed in the browser
 					</p>
 					{/* <form className="flex justify-center text-center">
 						<input type="file" id="input" onChange={FileChange} />

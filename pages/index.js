@@ -90,6 +90,10 @@ export default function Home() {
 					rel="icon"
 					href="https://www.globalcyberalliance.org/wp-content/uploads/favicon.png"
 				/>
+				<meta
+					name="Description"
+					content="A tool to compare DNS Services"
+				/>
 			</Head>
 
 			<main className="flex-grow p-8 mx-auto">
@@ -108,9 +112,13 @@ export default function Home() {
 							"bg-gray-200 appearance-none border-2 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white "
 						}
 						type="text"
+						id="search"
 						onChange={handleChange}
 					/>
 				</form>
+				<label for="search" className="hidden">
+					Find if a domain is blocked on any of the DNS services
+				</label>
 				<Provider index="0" logo="./cloudflare.svg" />
 				<Provider index="1" logo="./google.svg" />
 				<Provider index="2" logo="./quad9.svg" />
