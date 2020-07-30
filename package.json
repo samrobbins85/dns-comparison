@@ -12,18 +12,18 @@
     "chart.js": "^2.9.3",
     "extract-domain": "^2.2.1",
     "is-valid-domain": "0.0.14",
-    "next": "9.5.0",
+    "next": "9.5.1",
     "postcss-preset-env": "^6.7.0",
     "react": "16.13.1",
     "react-chartjs-2": "^2.9.0",
     "react-dom": "16.13.1",
     "react-table": "^7.3.2",
-    "tailwindcss": "^1.5.2"
+    "tailwindcss": "^1.6.0"
   },
   "devDependencies": {
     "@tailwindcss/custom-forms": "^0.2.1",
     "eslint": "^7.5.0",
-    "eslint-plugin-react": "^7.20.4"
+    "eslint-plugin-react": "^7.20.5"
   },
   "resolutions": {
     "webpack": "^5.0.0-beta.22"
