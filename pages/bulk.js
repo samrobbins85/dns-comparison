@@ -177,7 +177,7 @@ export default function Bulk() {
 						<input type="file" id="input" onChange={FileChange} />
 					</form> */}
 					<div className="flex justify-center">
-						<label class="w-64 flex flex-col items-center px-2 py-2 bg-white text-blue-500 rounded-lg shadow tracking-wide border border-blue cursor-pointer hover:bg-blue-500 hover:text-white">
+						<label class="w-64 flex flex-col items-center px-2 py-2 bg-white text-gray-800 rounded-lg shadow  border border-gray-300 cursor-pointer hover:bg-gray-200">
 							<svg
 								class="w-8 h-8"
 								fill="currentColor"
