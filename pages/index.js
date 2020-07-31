@@ -60,7 +60,7 @@ export default function Home() {
 						<img src={icon} alt="status" />
 					</div>
 					{result && (
-						<div className="flex items-center">
+						<div className="flex items-center justify-center">
 							<div>
 								<span className="text-2xl align-baseline">
 									{result[props.index][1]}
@@ -118,7 +118,7 @@ export default function Home() {
 			};
 			fetchData();
 		} else {
-			setResult([1, 1, 1]);
+			setResult(false);
 		}
 	}, [domain]);
 
@@ -157,6 +157,18 @@ export default function Home() {
 						onChange={handleChange}
 					/>
 				</form>
+				<div className="grid grid-cols-3 gap-4 pt-6">
+					<div className="text-center text-xl font-medium">
+						Provider
+					</div>
+					<div className="text-center text-xl font-medium">
+						Resolved
+					</div>
+					<div className="text-center text-xl font-medium">
+						Latency
+					</div>
+				</div>
+				<hr className="mt-4" />
 
 				<Provider index="0" logo="./cloudflare.svg" />
 				<Provider index="1" logo="./google.svg" />
