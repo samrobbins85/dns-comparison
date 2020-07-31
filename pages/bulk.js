@@ -11,6 +11,7 @@ export default function Bulk() {
 	const [filepresent, setFilepresent] = useState(false);
 	const [cf, setCF] = useState([""]);
 	const [fileName, setFileName] = useState(false);
+	const [showModal, setShowModal] = useState(false);
 	const [chart, setChart] = useState({
 		labels: ["Cloudflare", "Google", "Quad9"],
 
@@ -183,13 +184,72 @@ export default function Bulk() {
 					<p className="text-xl text-center text-gray-700 description">
 						Process a File using the button below
 					</p>
-					<p className="text-center text-gray-700 mb-6">
+					{/* <p className="text-center text-gray-700 mb-6">
 						These files are not uploaded, they stay on your computer
 						and are processed in the browser
-					</p>
-					{/* <form className="flex justify-center text-center">
-						<input type="file" id="input" onChange={FileChange} />
-					</form> */}
+					</p> */}
+					<div className="flex justify-center p-4 underline text-blue-800">
+						<button
+							className="text-center"
+							type="button"
+							style={{ transition: "all .15s ease" }}
+							onClick={() => setShowModal(true)}
+						>
+							Details on the format of the file
+						</button>
+					</div>
+					{showModal ? (
+						<>
+							<div
+								className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+								onClick={() => setShowModal(false)}
+							>
+								<div className="relative w-auto my-6 mx-auto max-w-2xl">
+									{/*content*/}
+									<div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+										{/*header*/}
+										<div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t">
+											<h3 className="text-3xl font-semibold">
+												File Format
+											</h3>
+											<button
+												className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+												onClick={() =>
+													setShowModal(false)
+												}
+											>
+												<span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+													×
+												</span>
+											</button>
+										</div>
+										{/*body*/}
+										<div className="relative px-6 flex-auto">
+											<p className="my-4 text-gray-600 text-lg leading-relaxed">
+												The file should be a .txt file
+												containing list of domains, with
+												a new domain on each line. You
+												can find an example file{" "}
+												<a
+													href="https://github.com/samrobbins85/dns-comparison/blob/master/example_file.txt"
+													className="text-blue-600 underline"
+												>
+													here
+												</a>
+												.
+												<br />
+												<br />
+												Files are not uploaded, they
+												stay on your computer and are
+												processed in the browser.
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+						</>
+					) : null}
 					<div className="flex justify-center">
 						<label class="w-64 flex flex-col items-center px-2 py-2 bg-white text-gray-800 rounded-lg shadow  border border-gray-300 cursor-pointer hover:bg-gray-200">
 							<svg

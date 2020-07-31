@@ -1,0 +1,12 @@
+google.com
+github.com
+microsoft.com
+blocked.test.on.quad9.net
+gmail.com
+gitkraken.com
+facebook.com
+gitlab.com
+twitter.com
+reactjs.org
+nextjs.org
+vercel.app
