@@ -11,9 +11,7 @@ const axiosTiming = (instance) => {
 	});
 
 	instance.interceptors.response.use((response) => {
-		const timeInMs = `${Number(
-			Date.now() - response.config.ts
-		).toFixed()}ms`;
+		const timeInMs = `${Number(Date.now() - response.config.ts).toFixed()}`;
 		response.latency = timeInMs;
 		return response;
 	});
@@ -63,7 +61,15 @@ export default function Home() {
 					</div>
 					{result && (
 						<div className="flex items-center">
-							<p>{result[props.index][1]}</p>
+							<div>
+								<span className="text-2xl align-baseline">
+									{result[props.index][1]}
+								</span>
+								<span className="align-baseline font-light">
+									{" "}
+									ms
+								</span>
+							</div>
 						</div>
 					)}
 				</div>
