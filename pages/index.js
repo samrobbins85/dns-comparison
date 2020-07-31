@@ -22,7 +22,7 @@ axiosTiming(axios);
 
 export default function Home() {
 	const [domain, setDomain] = useState("");
-	const [result, setResult] = useState("");
+	const [result, setResult] = useState(false);
 	function handleChange(event) {
 		var domain;
 		try {
@@ -39,8 +39,12 @@ export default function Home() {
 
 	function Provider(props) {
 		var icon;
-		if (result[props.index][0] === 0) {
-			icon = "/available.svg";
+		if (result) {
+			if (result[props.index][0] === 0) {
+				icon = "/available.svg";
+			} else {
+				icon = "/not_available.svg";
+			}
 		} else {
 			icon = "/not_available.svg";
 		}
