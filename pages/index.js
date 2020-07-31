@@ -3,6 +3,23 @@ import React, { useState, useEffect } from "react";
 import NavBar from "../components/navbar";
 import axios from "axios";
 import PropTypes from "prop-types";
+
+const axiosTiming = (instance) => {
+	instance.interceptors.request.use((request) => {
+		request.ts = Date.now();
+		return request;
+	});
+
+	instance.interceptors.response.use((response) => {
+		const timeInMs = `${Number(
+			Date.now() - response.config.ts
+		).toFixed()}ms`;
+		response.latency = timeInMs;
+		return response;
+	});
+};
+axiosTiming(axios);
+
 export default function Home() {
 	const [domain, setDomain] = useState("");
 	const [result, setResult] = useState("");
@@ -22,14 +39,14 @@ export default function Home() {
 
 	function Provider(props) {
 		var icon;
-		if (result[props.index] === 0) {
+		if (result[props.index][0] === 0) {
 			icon = "/available.svg";
 		} else {
 			icon = "/not_available.svg";
 		}
 		return (
 			<>
-				<div className="grid grid-cols-2 gap-4 pt-6">
+				<div className="grid grid-cols-3 gap-4 pt-6">
 					<div className="flex justify-center">
 						<img
 							className="h-12"
@@ -40,6 +57,7 @@ export default function Home() {
 					<div className="flex justify-center text-center">
 						<img src={icon} alt="status" />
 					</div>
+					<div>{result[props.index][1]}</div>
 				</div>
 				<hr className="mt-4" />
 			</>
@@ -66,13 +84,17 @@ export default function Home() {
 					.all([cloudflare, google, quad9])
 					.then(
 						axios.spread((...responses) => {
+							console.log(responses);
 							const responseOne = responses[0];
 							const responseTwo = responses[1];
 							const responesThree = responses[2];
 							setResult([
-								responseOne.data.Status,
-								responseTwo.data.Status,
-								responesThree.data.Status,
+								[responseOne.data.Status, responseOne.latency],
+								[responseTwo.data.Status, responseTwo.latency],
+								[
+									responesThree.data.Status,
+									responesThree.latency,
+								],
 							]);
 						})
 					)
