@@ -61,7 +61,11 @@ export default function Home() {
 					<div className="flex justify-center text-center">
 						<img src={icon} alt="status" />
 					</div>
-					{result && <div>{result[props.index][1]}</div>}
+					{result && (
+						<div className="flex items-center">
+							<p>{result[props.index][1]}</p>
+						</div>
+					)}
 				</div>
 				<hr className="mt-4" />
 			</>
