@@ -1,11 +1,12 @@
 import Head from "next/head";
 import React, { useState, useEffect } from "react";
 import NavBar from "../components/navbar";
-import axios from "axios";
+import axios, { AxiosStatic, AxiosResponse } from "axios";
 import PropTypes from "prop-types";
+import { ServerResponse } from "http";
 
-const axiosTiming = (instance) => {
-	instance.interceptors.request.use((request) => {
+const axiosTiming = (instance: any) => {
+	instance.interceptors.request.use((request: { ts: number }) => {
 		request.ts = Date.now();
 		return request;
 	});
@@ -20,7 +21,7 @@ axiosTiming(axios);
 
 export default function Home() {
 	const [domain, setDomain] = useState("");
-	const [result, setResult] = useState(false);
+	const [result, setResult] = useState([]);
 	function handleChange(event) {
 		var domain;
 		try {
@@ -35,9 +36,9 @@ export default function Home() {
 		setDomain(domain);
 	}
 
-	function Provider(props) {
-		var icon;
-		if (result) {
+	function Provider(props: { index: React.ReactText; logo: string }) {
+		var icon: string;
+		if (result.length !== 0) {
 			if (result[props.index][0] === 0) {
 				icon = "/available.svg";
 			} else {
@@ -59,7 +60,7 @@ export default function Home() {
 					<div className="flex justify-center text-center">
 						<img src={icon} alt="status" />
 					</div>
-					{result && (
+					{result.length !== 0 && (
 						<div className="flex items-center justify-center">
 							<div>
 								<span className="text-2xl align-baseline">
@@ -118,7 +119,7 @@ export default function Home() {
 			};
 			fetchData();
 		} else {
-			setResult(false);
+			setResult([]);
 		}
 	}, [domain]);
 
