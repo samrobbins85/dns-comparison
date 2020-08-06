@@ -1,9 +1,8 @@
 import Head from "next/head";
 import React, { useState, useEffect } from "react";
 import NavBar from "../components/navbar";
-import axios, { AxiosStatic, AxiosResponse } from "axios";
+import axios from "axios";
 import PropTypes from "prop-types";
-import { ServerResponse } from "http";
 
 const axiosTiming = (instance: any) => {
 	instance.interceptors.request.use((request: { ts: number }) => {
@@ -11,19 +10,23 @@ const axiosTiming = (instance: any) => {
 		return request;
 	});
 
-	instance.interceptors.response.use((response) => {
-		const timeInMs = `${Number(Date.now() - response.config.ts).toFixed()}`;
-		response.latency = timeInMs;
-		return response;
-	});
+	instance.interceptors.response.use(
+		(response: { config: { ts: number }; latency: string }) => {
+			const timeInMs = `${Number(
+				Date.now() - response.config.ts
+			).toFixed()}`;
+			response.latency = timeInMs;
+			return response;
+		}
+	);
 };
 axiosTiming(axios);
 
 export default function Home() {
 	const [domain, setDomain] = useState("");
-	const [result, setResult] = useState([]);
-	function handleChange(event) {
-		var domain;
+	const [result, setResult] = useState([[-1]]);
+	function handleChange(event: { target: { value: string } }) {
+		var domain: React.SetStateAction<string>;
 		try {
 			domain = new URL(event.target.value).hostname;
 		} catch {
@@ -36,9 +39,9 @@ export default function Home() {
 		setDomain(domain);
 	}
 
-	function Provider(props: { index: React.ReactText; logo: string }) {
+	function Provider(props: { index: number; logo: string }) {
 		var icon: string;
-		if (result.length !== 0) {
+		if (result[0][0] !== -1) {
 			if (result[props.index][0] === 0) {
 				icon = "/available.svg";
 			} else {
@@ -60,7 +63,7 @@ export default function Home() {
 					<div className="flex justify-center text-center">
 						<img src={icon} alt="status" />
 					</div>
-					{result.length !== 0 && (
+					{result[0][0] !== -1 && (
 						<div className="flex items-center justify-center">
 							<div>
 								<span className="text-2xl align-baseline">
@@ -114,12 +117,12 @@ export default function Home() {
 						})
 					)
 					.catch(() => {
-						setResult([-1, -1, -1]);
+						setResult([[-1]]);
 					});
 			};
 			fetchData();
 		} else {
-			setResult([]);
+			setResult([[-1]]);
 		}
 	}, [domain]);
 
@@ -171,9 +174,9 @@ export default function Home() {
 				</div>
 				<hr className="mt-4" />
 
-				<Provider index="0" logo="./cloudflare.svg" />
-				<Provider index="1" logo="./google.svg" />
-				<Provider index="2" logo="./quad9.svg" />
+				<Provider index={0} logo="./cloudflare.svg" />
+				<Provider index={1} logo="./google.svg" />
+				<Provider index={2} logo="./quad9.svg" />
 			</main>
 		</div>
 	);
