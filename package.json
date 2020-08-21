@@ -11,7 +11,7 @@
     "axios": "^0.19.2",
     "chart.js": "^2.9.3",
     "extract-domain": "^2.2.1",
-    "is-valid-domain": "0.0.14",
+    "is-valid-domain": "0.0.15",
     "next": "9.5.2",
     "postcss-preset-env": "^6.7.0",
     "react": "16.13.1",
