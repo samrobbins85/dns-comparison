@@ -3386,10 +3386,10 @@ is-symbol@^1.0.2:
   dependencies:
     has-symbols "^1.0.1"
 
-is-valid-domain@0.0.14:
-  version "0.0.14"
-  resolved "https://registry.yarnpkg.com/is-valid-domain/-/is-valid-domain-0.0.14.tgz#26f918ed6be2f8554db281efb9f7169d840a6664"
-  integrity sha512-MTUz/3y25zTtutAfwrLyFK+1l2IL4bcq2iHVdYHIPQbvBJLunlYu9dsQdtLwD9HKPDyxCDlKnSbGcRwvjVeCxA==
+is-valid-domain@0.0.15:
+  version "0.0.15"
+  resolved "https://registry.yarnpkg.com/is-valid-domain/-/is-valid-domain-0.0.15.tgz#e2effaaa3d48e907670fa8f5874df05e6363547d"
+  integrity sha512-Mcq4a6oLR+ugNyUlZ8WbuJBCm6hB50B6bgZcr0z7qm4mjbmw+WuqLAxR0eV+jnmtRcSSd++21wD4aQJZb7YZZg==
 
 is-windows@^1.0.2:
   version "1.0.2"
