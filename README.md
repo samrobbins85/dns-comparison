@@ -21,5 +21,7 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+To learn more about how this works, open the Wiki tab on GitHub
+
 
 
