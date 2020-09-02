@@ -82,7 +82,7 @@ export default function Home() {
 		);
 	}
 	Provider.propTypes = {
-		index: PropTypes.string.isRequired,
+		index: PropTypes.number.isRequired,
 		logo: PropTypes.string.isRequired,
 	};
 

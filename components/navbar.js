@@ -14,6 +14,11 @@ export default function NavBar() {
 						<a>Bulk</a>
 					</Link>
 				</li>
+				<li className="mr-6">
+					<Link href="/server">
+						<a>Server</a>
+					</Link>
+				</li>
 			</ul>
 			<ul className="flex float-right">
 				<li className="mr-6">

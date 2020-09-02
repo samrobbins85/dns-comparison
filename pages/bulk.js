@@ -184,10 +184,6 @@ export default function Bulk() {
 					<p className="text-xl text-center text-gray-700 description">
 						Process a File using the button below
 					</p>
-					{/* <p className="text-center text-gray-700 mb-6">
-						These files are not uploaded, they stay on your computer
-						and are processed in the browser
-					</p> */}
 					<div className="flex justify-center p-4 underline text-blue-800">
 						<button
 							className="text-center"
