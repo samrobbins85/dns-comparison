@@ -9,6 +9,8 @@ const Bar = dynamic(() => import("react-chartjs-2").then((mod) => mod.Bar));
 export default function Server() {
 	const [fileName, setFileName] = useState("Select a File");
 	const [fileOutput, setFileOutput] = useState(false);
+	const [sources, setSources] = useState(false);
+	const [source, setSource] = useState(0);
 	const [chart, setChart] = useState({
 		labels: [
 			"Quad 9",
@@ -33,8 +35,55 @@ export default function Server() {
 		],
 	});
 
+	const [sourcechart, setSourceChart] = useState({
+		labels: [
+			"Quad 9",
+			"Quad 9 Noblock",
+			"Google",
+			"Cloudflare Safe",
+			"Cloudflare",
+			"OpenDNS",
+			"Ultra Recursive",
+		],
+
+		datasets: [
+			{
+				label: "Blocks",
+				backgroundColor: "rgba(255,99,132,0.2)",
+				borderColor: "rgba(255,99,132,1)",
+				borderWidth: 1,
+				hoverBackgroundColor: "rgba(255,99,132,0.4)",
+				hoverBorderColor: "rgba(255,99,132,1)",
+				data: [0, 0, 0, 0, 0, 0, 0],
+			},
+		],
+	});
+
+	useEffect(() => {
+		if (sources) {
+			let initial = { ...sourcechart };
+			initial.datasets[0].data = sources[source].slice(2);
+			setSourceChart(initial);
+		}
+	}, [source]);
+
 	useEffect(() => {
 		if (fileOutput) {
+			console.log(fileOutput);
+			var indexes = fileOutput.data.reduce(
+				(m, e, i) => (e[0] === "" && m.push(i), m),
+				[]
+			);
+			const allsources = fileOutput.data.slice(
+				indexes[0] + 3,
+				indexes[1]
+			);
+			let initial = { ...sourcechart };
+			initial.datasets[0].data = allsources[0].slice(2);
+			console.log(initial);
+			setSourceChart(initial);
+
+			setSources(allsources);
 			let base = { ...chart };
 			base.datasets[0].data = [
 				fileOutput.data[1][1],
@@ -116,6 +165,31 @@ export default function Server() {
 						<div className="container mx-auto">
 							<Bar data={chart} options={scale} height={100} />
 						</div>
+					)}
+					<h2 className="text-xl py-5 font-semibold">
+						Comparison by data source:
+					</h2>
+					{sources && (
+						<>
+							<select
+								className="form-select"
+								value={source}
+								onChange={(event) =>
+									setSource(event.target.value)
+								}
+							>
+								{sources.map((source, index) => (
+									<option value={index}>{source[0]}</option>
+								))}
+							</select>
+							<div className="container mx-auto">
+								<Bar
+									data={sourcechart}
+									options={scale}
+									height={100}
+								/>
+							</div>
+						</>
 					)}
 				</div>
 			</div>
