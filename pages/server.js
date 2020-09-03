@@ -144,6 +144,18 @@ export default function Server() {
 			},
 		});
 	}
+
+	function test_files() {
+		setTld(0);
+		setSource(0);
+		Papa.parse("/output_results_31_08.csv", {
+			download: true,
+			complete: function (results) {
+				setFileOutput(results);
+			},
+		});
+	}
+
 	const scale = {
 		maintainAspectRatio: true,
 		scales: {
@@ -194,73 +206,83 @@ export default function Server() {
 						/>
 					</label>
 				</div>
-				<div className="text-center pt-10 text-lg">
-					<h2>Total number of domains:</h2>
-					<span className="font-semibold text-xl">
-						{fileOutput && fileOutput.data[0][1]}
-					</span>
-					{fileOutput && (
-						<div className="container mx-auto">
-							<Bar data={chart} options={scale} height={100} />
-						</div>
-					)}
-
-					{sources && (
-						<>
-							<h2 className="text-xl py-5 font-semibold">
-								Comparison by data source:
-							</h2>
-							<select
-								className="form-select"
-								value={source}
-								onChange={(event) =>
-									setSource(event.target.value)
-								}
-							>
-								{sources.map((source, index) => (
-									<option value={index}>{source[0]}</option>
-								))}
-							</select>
-							<h3 className="py-2">
-								Total number of sources: {sources[source][1]}
-							</h3>
-							<div className="container mx-auto">
-								<Bar
-									data={sourcechart}
-									options={scale}
-									height={100}
-								/>
-							</div>
-						</>
-					)}
-					{tlds && (
-						<>
-							<h2 className="text-xl py-5 font-semibold">
-								Comparison by TLD:
-							</h2>
-							<select
-								className="form-select"
-								value={tld}
-								onChange={(event) => setTld(event.target.value)}
-							>
-								{tlds.map((tld, index) => (
-									<option value={index}>{tld[0]}</option>
-								))}
-							</select>
-							<h3 className="py-2">
-								Total number of domains: {tlds[tld][1]}
-							</h3>
-
-							<div className="container mx-auto">
-								<Bar
-									data={tldchart}
-									options={scale}
-									height={100}
-								/>
-							</div>
-						</>
-					)}
+				<div className="flex justify-center pt-4">
+					<button
+						className="p-2 border border-gray-300 w-1/6"
+						onClick={test_files}
+					>
+						Get generated sample
+					</button>
 				</div>
+				{fileOutput && (
+					<div className="text-center pt-10 text-lg">
+						<h2>Total number of domains:</h2>
+						<span className="font-semibold text-xl">
+							{fileOutput && fileOutput.data[0][1]}
+						</span>
+
+						{sources && (
+							<>
+								<h2 className="text-xl py-5 font-semibold">
+									Comparison by data source:
+								</h2>
+								<select
+									className="form-select"
+									value={source}
+									onChange={(event) =>
+										setSource(event.target.value)
+									}
+								>
+									{sources.map((source, index) => (
+										<option value={index}>
+											{source[0]}
+										</option>
+									))}
+								</select>
+								<h3 className="py-2">
+									Total number of sources:{" "}
+									{sources[source][1]}
+								</h3>
+								<div className="container mx-auto">
+									<Bar
+										data={sourcechart}
+										options={scale}
+										height={100}
+									/>
+								</div>
+							</>
+						)}
+						{tlds && (
+							<>
+								<h2 className="text-xl py-5 font-semibold">
+									Comparison by TLD:
+								</h2>
+								<select
+									className="form-select"
+									value={tld}
+									onChange={(event) =>
+										setTld(event.target.value)
+									}
+								>
+									{tlds.map((tld, index) => (
+										<option value={index}>{tld[0]}</option>
+									))}
+								</select>
+								<h3 className="py-2">
+									Total number of domains: {tlds[tld][1]}
+								</h3>
+
+								<div className="container mx-auto">
+									<Bar
+										data={tldchart}
+										options={scale}
+										height={100}
+									/>
+								</div>
+							</>
+						)}
+					</div>
+				)}
 			</div>
 		</>
 	);
