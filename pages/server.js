@@ -220,7 +220,15 @@ export default function Server() {
 						<span className="font-semibold text-xl">
 							{fileOutput && fileOutput.data[0][1]}
 						</span>
-
+						{fileOutput && (
+							<div className="container mx-auto">
+								<Bar
+									data={chart}
+									options={scale}
+									height={100}
+								/>
+							</div>
+						)}
 						{sources && (
 							<>
 								<h2 className="text-xl py-5 font-semibold">
@@ -240,7 +248,7 @@ export default function Server() {
 									))}
 								</select>
 								<h3 className="py-2">
-									Total number of sources:{" "}
+									Number of domains from source:{" "}
 									{sources[source][1]}
 								</h3>
 								<div className="container mx-auto">
@@ -269,7 +277,7 @@ export default function Server() {
 									))}
 								</select>
 								<h3 className="py-2">
-									Total number of domains: {tlds[tld][1]}
+									Number of domains from TLD: {tlds[tld][1]}
 								</h3>
 
 								<div className="container mx-auto">
