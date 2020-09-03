@@ -11,6 +11,8 @@ export default function Server() {
 	const [fileOutput, setFileOutput] = useState(false);
 	const [sources, setSources] = useState(false);
 	const [source, setSource] = useState(0);
+	const [tlds, setTlds] = useState(false);
+	const [tld, setTld] = useState(0);
 	const [chart, setChart] = useState({
 		labels: [
 			"Quad 9",
@@ -49,11 +51,34 @@ export default function Server() {
 		datasets: [
 			{
 				label: "Blocks",
-				backgroundColor: "rgba(255,99,132,0.2)",
-				borderColor: "rgba(255,99,132,1)",
+				backgroundColor: "rgba(79,209,197,0.3)",
+				borderColor: "rgba(79,209,197,1)",
 				borderWidth: 1,
-				hoverBackgroundColor: "rgba(255,99,132,0.4)",
-				hoverBorderColor: "rgba(255,99,132,1)",
+				hoverBackgroundColor: "rgba(79,209,197,0.4)",
+				hoverBorderColor: "rgba(79,209,197,1)",
+				data: [0, 0, 0, 0, 0, 0, 0],
+			},
+		],
+	});
+	const [tldchart, setTldChart] = useState({
+		labels: [
+			"Quad 9",
+			"Quad 9 Noblock",
+			"Google",
+			"Cloudflare Safe",
+			"Cloudflare",
+			"OpenDNS",
+			"Ultra Recursive",
+		],
+
+		datasets: [
+			{
+				label: "Blocks",
+				backgroundColor: "rgba(183,148,244,0.3)",
+				borderColor: "rgba(183,148,244,1)",
+				borderWidth: 1,
+				hoverBackgroundColor: "rgba(183,148,244,0.4)",
+				hoverBorderColor: "rgba(183,148,244,1)",
 				data: [0, 0, 0, 0, 0, 0, 0],
 			},
 		],
@@ -68,6 +93,14 @@ export default function Server() {
 	}, [source]);
 
 	useEffect(() => {
+		if (tlds) {
+			let initial = { ...tldchart };
+			initial.datasets[0].data = tlds[tld].slice(2);
+			setTldChart(initial);
+		}
+	}, [tld]);
+
+	useEffect(() => {
 		if (fileOutput) {
 			console.log(fileOutput);
 			var indexes = fileOutput.data.reduce(
@@ -78,12 +111,17 @@ export default function Server() {
 				indexes[0] + 3,
 				indexes[1]
 			);
-			let initial = { ...sourcechart };
-			initial.datasets[0].data = allsources[0].slice(2);
-			console.log(initial);
-			setSourceChart(initial);
-
 			setSources(allsources);
+			let initial_sources = { ...sourcechart };
+			initial_sources.datasets[0].data = allsources[0].slice(2);
+			setSourceChart(initial_sources);
+
+			const alltlds = fileOutput.data.slice(indexes[1] + 3, indexes[2]);
+			setTlds(alltlds);
+			let initial_tlds = { ...tldchart };
+			initial_tlds.datasets[0].data = alltlds[0].slice(2);
+			setTldChart(initial_tlds);
+
 			let base = { ...chart };
 			base.datasets[0].data = [
 				fileOutput.data[1][1],
@@ -166,11 +204,12 @@ export default function Server() {
 							<Bar data={chart} options={scale} height={100} />
 						</div>
 					)}
-					<h2 className="text-xl py-5 font-semibold">
-						Comparison by data source:
-					</h2>
+
 					{sources && (
 						<>
+							<h2 className="text-xl py-5 font-semibold">
+								Comparison by data source:
+							</h2>
 							<select
 								className="form-select"
 								value={source}
@@ -182,9 +221,39 @@ export default function Server() {
 									<option value={index}>{source[0]}</option>
 								))}
 							</select>
+							<h3 className="py-2">
+								Total number of sources: {sources[source][1]}
+							</h3>
 							<div className="container mx-auto">
 								<Bar
 									data={sourcechart}
+									options={scale}
+									height={100}
+								/>
+							</div>
+						</>
+					)}
+					{tlds && (
+						<>
+							<h2 className="text-xl py-5 font-semibold">
+								Comparison by TLD:
+							</h2>
+							<select
+								className="form-select"
+								value={tld}
+								onChange={(event) => setTld(event.target.value)}
+							>
+								{tlds.map((tld, index) => (
+									<option value={index}>{tld[0]}</option>
+								))}
+							</select>
+							<h3 className="py-2">
+								Total number of domains: {tlds[tld][1]}
+							</h3>
+
+							<div className="container mx-auto">
+								<Bar
+									data={tldchart}
 									options={scale}
 									height={100}
 								/>
