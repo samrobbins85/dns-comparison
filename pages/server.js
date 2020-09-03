@@ -208,7 +208,7 @@ export default function Server() {
 				</div>
 				<div className="flex justify-center pt-4">
 					<button
-						className="p-2 border border-gray-300 w-1/6"
+						className="py-2 px-4 border border-gray-300 "
 						onClick={test_files}
 					>
 						Get generated sample
