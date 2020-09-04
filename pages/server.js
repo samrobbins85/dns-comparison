@@ -218,17 +218,13 @@ export default function Server() {
 					<div className="text-center pt-10 text-lg">
 						<h2>Total number of domains:</h2>
 						<span className="font-semibold text-xl">
-							{fileOutput && fileOutput.data[0][1]}
+							{fileOutput.data[0][1]}
 						</span>
-						{fileOutput && (
-							<div className="container mx-auto">
-								<Bar
-									data={chart}
-									options={scale}
-									height={100}
-								/>
-							</div>
-						)}
+
+						<div className="container mx-auto">
+							<Bar data={chart} options={scale} height={100} />
+						</div>
+
 						{sources && (
 							<>
 								<h2 className="text-xl py-5 font-semibold">
