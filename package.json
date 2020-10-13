@@ -12,7 +12,7 @@
     "chart.js": "^2.9.3",
     "extract-domain": "^2.2.1",
     "is-valid-domain": "0.0.15",
-    "next": "9.5.4",
+    "next": "9.5.5",
     "papaparse": "^5.3.0",
     "postcss-preset-env": "^6.7.0",
     "react": "16.13.1",
