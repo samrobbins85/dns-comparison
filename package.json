@@ -8,7 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "chart.js": "^2.9.4",
     "extract-domain": "^2.2.1",
     "is-valid-domain": "0.0.15",
