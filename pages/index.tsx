@@ -89,7 +89,8 @@ export default function Home() {
 	useEffect(() => {
 		if (domain !== "") {
 			const cloudflare = axios.get(
-				`https://Cloudflare-dns.com/dns-query?ct=application/dns-json&type=AAAA&name=${domain}`
+				`https://1.1.1.1/dns-query?name=${domain}`,
+				{headers: {Accept: "application/dns-json"}}
 			);
 			const google = axios.get(
 				`https://dns.google/resolve?name=${domain}`

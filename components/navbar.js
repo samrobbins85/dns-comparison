@@ -2,21 +2,21 @@ import Link from "next/link";
 
 export default function NavBar() {
 	return (
-		<nav className="border-b border-gray-200 h-12 p-3">
+        <nav className="border-b border-gray-200 h-12 p-3">
 			<ul className="flex float-left">
 				<li className="mr-6">
 					<Link href="/">
-						<a>Home</a>
+						Home
 					</Link>
 				</li>
 				<li className="mr-6">
 					<Link href="/bulk">
-						<a>Bulk</a>
+						Bulk
 					</Link>
 				</li>
 				<li className="mr-6">
 					<Link href="/server">
-						<a>Server</a>
+						Server
 					</Link>
 				</li>
 			</ul>
@@ -34,5 +34,5 @@ export default function NavBar() {
 				</li>
 			</ul>
 		</nav>
-	);
+    );
 }
